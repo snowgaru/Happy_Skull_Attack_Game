@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     public List<AudioClip> audioClips;
 
-    #region ±ÙÁ¢ÄŞº¸°ø°İ
+    #region ê·¼ì ‘ì½¤ë³´ê³µê²©
     bool comboPossible;
     int comboStep;
 
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
             //anim.Play("Attack2Animation");
         }
         //if(comboStep == 3)
-        //{ anim.Play("ÀÌ¸§");
+        //{ anim.Play("ì´ë¦„");
     }
 
     public void SwordEffect1Instance()
@@ -152,7 +152,6 @@ public class PlayerController : MonoBehaviour
     private void ShootRay()
     {
         RaycastHit info;
-        Debug.DrawRay(transform.position, -transform.up, Color.red, 2f);
         if(Physics.Raycast(transform.position, -transform.up, out info, 1000))
         {
             if(info.transform.CompareTag("Floor"))
@@ -168,7 +167,6 @@ public class PlayerController : MonoBehaviour
 
     public void PerfectDodgeTimeSlowFeedbacking()
     {
-        Debug.Log("¶§·ÁÃÄ¾ßÁö");
         PerfectDodgeTimeSlowFeedback?.Invoke();
     }
 
@@ -200,7 +198,7 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    #region ÀÌµ¿°ü·Ã
+    #region ì´ë™ê´€ë ¨
     Rigidbody rb;
     Animator anim;
 
@@ -252,13 +250,13 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0) && isCanMeleeAttack == true)
         {
-            //±ÙÁ¢°ø°İ
+            //ê·¼ì ‘ê³µê²©
             Attack();
         }
         if(Input.GetMouseButtonDown(1)&& isCanMeleeAttack == true)
         {
 
-            //¿ø°Å¸® °ø°İ
+            //ì›ê±°ë¦¬ ê³µê²©
             //anim.SetTrigger("RangeAttack");
             if (!isShooting)
             {
@@ -297,7 +295,7 @@ public class PlayerController : MonoBehaviour
 
     void Fire()
     {
-        // Bullet º¹»çº» »ı¼º
+        // Bullet ë³µì‚¬ë³¸ ìƒì„±
         PlayGunSound();
         Bullet bulletPrefab = PoolManager.Instance.Pop("Bullet") as Bullet;
         bulletPrefab.GetComponent<Transform>().SetPositionAndRotation(firePos.position, firePos.rotation);
@@ -310,14 +308,14 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 offset = new Vector2(Random.Range(0, 2), Random.Range(0, 2)) * 0.5f;
 
-        // ·£´ıÇÑ ¿ÀÇÁ¼Â
+        // ëœë¤í•œ ì˜¤í”„ì…‹
         muzzleFlash.material.mainTextureOffset = offset;
 
-        // ·£´ıÇÑ È¸Àü
+        // ëœë¤í•œ íšŒì „
         float angle = Random.Range(0, 360);
         muzzleFlash.transform.localRotation = Quaternion.Euler(Vector3.forward * angle);
 
-        // ·£´ıÇÑ Å©±â
+        // ëœë¤í•œ í¬ê¸°
         float scale = Random.Range(0.5f, 0.8f);
         muzzleFlash.transform.localScale = Vector3.one * scale;
 
@@ -345,14 +343,12 @@ public class PlayerController : MonoBehaviour
     {
         if (isGodMode) yield break;
         isGodMode = true;
-        Debug.Log("ÆÛÆåÆ®´åÁö°«¸ğµåÆ®·ç");
         UIManager.instance.GodmodeText(true);
         motionTrail.SetActive(true);
         yield return new WaitForSeconds(10f);
         UIManager.instance.GodmodeText(false);
         motionTrail.SetActive(false);
         isGodMode = false;
-        Debug.Log("ÆÛÆåÆ®´åÁö°«¸ğµåÆŞ½º");
     }
 
     void OnCollisionEnter(Collision collision)
@@ -370,7 +366,6 @@ public class PlayerController : MonoBehaviour
 
             if(isRolling)
             {
-                Debug.Log("Å¸ÀÌ¹Ö È¸ÇÇ");
                 PerfectDodgeTimeSlowFeedbacking();
                 StopCoroutine(PerfectDodge());
                 StopCoroutine(AttackingGodMode());
@@ -394,8 +389,6 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(PerfectDodge());
             StopCoroutine(AttackingGodMode());
             StartCoroutine(AttackingGodMode());;
-
-            Debug.Log(GameManager.instance.playerHP); 
         }
 
     }
